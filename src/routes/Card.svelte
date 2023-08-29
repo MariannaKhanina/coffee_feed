@@ -1,5 +1,9 @@
 <script lang="ts">
 	export let intensifier: string;
+	export let origin: string = '';
+	export let name: string;
+	export let variety: string = '';
+	export let notes: string[] = [];
 </script>
 
 <article>
@@ -7,11 +11,12 @@
 		<img src="" alt="Coffe image" />
 	</picture>
 	<span>{intensifier}</span>
-	<h3>Origin</h3>
-	<h2>Brand Name</h2>
-	<p>Variety</p>
+	<h3>{origin}</h3>
+	<h2>{name}</h2>
+	<p>{variety}</p>
 	<ul>
-		<li>note</li>
-		<li>note</li>
+		{#each notes as note}
+			<li>{note}</li>
+		{/each}
 	</ul>
 </article>
