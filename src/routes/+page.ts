@@ -1,3 +1,5 @@
+import type { LoadEvent } from "@sveltejs/kit";
+
 export type CoffeeInfoType = {
     id: number;
     uid: string;
@@ -8,23 +10,17 @@ export type CoffeeInfoType = {
     intensifier: string;
 }
 
-export type CoffeeListType = {
-    list: CoffeeInfoType[];
+export type DataType<T> = {
+    item: T;
 }
 
+const apiUrl = 'https://random-data-api.com/api/coffee/random_coffee';
+const imageUrl = 'https://loremflickr.com/500/500/coffee_bean';
+
 /** @type {import('./$types').PageLoad} */
-export function load(): CoffeeListType {
-    return {
-        "list":
-            [{
-                "id": 3417,
-                "uid":
-                    "9c772363-8362-48a2-b871-cdbbea018b86",
-                "blend_name": "Blue Enlightenment",
-                "origin": "Chiriqui, Panama",
-                "variety": "Ethiopian Heirloom",
-                "notes": "crisp, coating, black-tea, peanut, tobacco",
-                "intensifier": "juicy"
-            },],
-    };
+export async function load({ fetch }: LoadEvent): Promise<DataType<CoffeeInfoType>> {
+    const res = await fetch(apiUrl);
+    const item = await res.json();
+
+    return { item };
 }

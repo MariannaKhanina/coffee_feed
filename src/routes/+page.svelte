@@ -1,9 +1,10 @@
 <script lang="ts">
 	import Card from './Card.svelte';
-	import type { CoffeeListType } from './+page';
+	import type { PageData } from './$types';
 
-	/** @type {import('./$types').PageData} */
-	export let data: CoffeeListType;
+	export let data: PageData;
+
+	let item = data.item;
 </script>
 
 <svelte:head>
@@ -11,7 +12,7 @@
 	<meta name="description" content="An endless source of knowledge about coffee" />
 </svelte:head>
 
-{#each data.list as item}
+{#if item != null}
 	<Card
 		intensifier={item.intensifier}
 		origin={item.origin}
@@ -21,6 +22,6 @@
 	/>
 {:else}
 	<div>Данные не найдены</div>
-{/each}
+{/if}
 
 <button> + </button>
