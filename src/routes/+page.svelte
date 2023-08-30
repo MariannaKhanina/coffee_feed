@@ -1,10 +1,10 @@
 <script lang="ts">
-	import Card from './Card.svelte';
-	import type { PageData } from './$types';
+	import Card from '$lib/components/Card.svelte';
+	import { coffeeList, updateCoffeeList } from "$lib/store";
 
-	export let data: PageData;
-
-	let item = data.item;
+	async function addItem() {
+		await updateCoffeeList();
+	}
 </script>
 
 <svelte:head>
@@ -12,8 +12,9 @@
 	<meta name="description" content="An endless source of knowledge about coffee" />
 </svelte:head>
 
-{#if item != null}
+{#each $coffeeList as item}
 	<Card
+		image={item.image || ''}
 		intensifier={item.intensifier}
 		origin={item.origin}
 		name={item.blend_name}
@@ -22,6 +23,6 @@
 	/>
 {:else}
 	<div>Данные не найдены</div>
-{/if}
+	{/each}
 
-<button> + </button>
+<button on:click={addItem}> + </button>
