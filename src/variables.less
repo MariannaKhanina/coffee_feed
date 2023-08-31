@@ -1,0 +1,34 @@
+// Mode: Tablet
+@tablet: ~"(min-width: 768px)";
+@tablet-area: 750px;
+
+// Mode: Desktop
+@desktop: ~"(min-width: 1024px)";
+@desktop-area: 970px;
+
+// Colors
+@dark_blue: #050038;
+@red: #F14726;
+@grey: #E6E6E6;
+@light_yellow: #FFF895;
+@light_green: #EEFEDF;
+@brown: #9B3624;
+
+@cards_in_line: 4;
+
+
+@media @tablet {
+    @cards_in_line: 3;
+    @card_width: 30rem;
+}
+
+@main_horizontal_padding: 1vw;
+@card_horizontal_margin: 1vw;
+
+@card_width: ((100vw - @main_horizontal_padding * 2 - 2vw) / @cards_in_line - (2 * @card_horizontal_margin));
+@card_min_height: (30vw);
+
+
+
+@image_width: @card_width;
+@image_height: @image_width;

@@ -1,10 +1,32 @@
 <script lang="ts">
 	import Card from '$lib/components/Card.svelte';
-	import { coffeeList, updateCoffeeList } from "$lib/store";
+	import Button from '$lib/components/Button.svelte';
+	import ErrorMessage from '$lib/components/ErrorMessage.svelte';
+	import { coffeeList, updateCoffeeList, loadingStatus, error } from '$lib/store';
+	import { LoadingStatusEnum } from '$lib/types';
+	import { scrollToBottom } from '$lib/utils';
 
 	async function addItem() {
 		await updateCoffeeList();
+		setTimer();
 	}
+
+	let timer: ReturnType<typeof setInterval>;
+
+	function setTimer() {
+		clearTimeout(timer);
+		timer = setTimeout(async () => {
+			await addItem();
+		}, 30000);
+	}
+
+	setTimer();
+
+	let isLoading: boolean = false;
+
+	loadingStatus.subscribe((value) => {
+		isLoading = value == LoadingStatusEnum.loading;
+	});
 </script>
 
 <svelte:head>
@@ -12,17 +34,65 @@
 	<meta name="description" content="An endless source of knowledge about coffee" />
 </svelte:head>
 
-{#each $coffeeList as item}
-	<Card
-		image={item.image || ''}
-		intensifier={item.intensifier}
-		origin={item.origin}
-		name={item.blend_name}
-		variety={item.variety}
-		notes={item.notes.split(', ')}
-	/>
+{#if $error}
+	<ErrorMessage error={$error} />
 {:else}
-	<div>Данные не найдены</div>
-	{/each}
+	<div use:scrollToBottom={$coffeeList} class="cards">
+		{#each $coffeeList as item}
+			<Card
+				class="card"
+				image={item.image || ''}
+				intensifier={item.intensifier}
+				origin={item.origin}
+				name={item.blend_name}
+				variety={item.variety}
+				notes={item.notes.split(', ')}
+			/>
+		{:else}
+			<div>Данные не найдены</div>
+		{/each}
+		<div class="button-container">
+			<Button text="+" on:click={addItem} loading={isLoading} />
+		</div>
+	</div>
+{/if}
 
-<button on:click={addItem}> + </button>
+<style lang="less">
+	@import '../variables.less';
+
+	.cards {
+		display: flex;
+		align-items: flex-start;
+		flex-wrap: wrap;
+		overflow: auto;
+		height: 74vh;
+
+		&::-webkit-scrollbar {
+			width: 5px;
+		}
+
+		&::-webkit-scrollbar-track {
+			background: white;
+			border-radius: 5px;
+		}
+		&::-webkit-scrollbar-thumb {
+			background-color: @red;
+		}
+
+		:global(.card) {
+			width: @card_width;
+			min-height: @card_min_height;
+			margin: 0 @card_horizontal_margin 1.5rem;
+		}
+	}
+
+	.button-container {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+
+		width: @card_width;
+		min-height: @card_min_height;
+		margin: 0 @card_horizontal_margin 1.5vw;
+	}
+</style>

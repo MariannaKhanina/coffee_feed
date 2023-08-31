@@ -12,3 +12,9 @@ export type CoffeeInfoType = {
 export type DataType<T> = {
     item: T;
 }
+
+export enum LoadingStatusEnum { 
+    loading,
+    done,
+    error,
+}
