@@ -59,13 +59,18 @@
 
 <style lang="less">
 	@import '../variables.less';
-
 	.cards {
 		display: flex;
-		align-items: flex-start;
 		flex-wrap: wrap;
 		overflow: auto;
-		height: 74vh;
+		max-height: @cards_max_height;
+
+		@media @mobile {
+			flex-direction: row;
+			flex-wrap: wrap;
+			justify-content: center;
+			max-height: @cards_max_height_mobile;
+		}
 
 		&::-webkit-scrollbar {
 			width: 5px;
@@ -77,12 +82,20 @@
 		}
 		&::-webkit-scrollbar-thumb {
 			background-color: @red;
+			border-radius: 5px;
 		}
 
 		:global(.card) {
 			width: @card_width;
-			min-height: @card_min_height;
 			margin: 0 @card_horizontal_margin 1.5rem;
+
+			@media @tablet {
+				width: @card_width_tablet;
+			}
+
+			@media @mobile {
+				width: @card_width_mobile;
+			}
 		}
 	}
 
@@ -92,7 +105,17 @@
 		justify-content: center;
 
 		width: @card_width;
-		min-height: @card_min_height;
+		min-height: @button_container_min_height;
 		margin: 0 @card_horizontal_margin 1.5vw;
+
+		@media @tablet {
+			width: @card_width_tablet;
+			margin-left: @card_horizontal_margin_tablet;
+			margin-right: @card_horizontal_margin_tablet;
+		}
+
+		@media @mobile {
+			width: @card_width_mobile;
+		}
 	}
 </style>

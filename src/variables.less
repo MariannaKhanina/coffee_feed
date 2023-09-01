@@ -1,10 +1,10 @@
-// Mode: Tablet
-@tablet: ~"(min-width: 768px)";
-@tablet-area: 750px;
+// Mode: Mobile
+@mobile: ~"(max-width: 481px)";
+@mobile-area: 470px;
 
-// Mode: Desktop
-@desktop: ~"(min-width: 1024px)";
-@desktop-area: 970px;
+// Mode: Tablet
+@tablet: ~"(max-width: 768px)";
+@tablet-area: 750px;
 
 // Colors
 @dark_blue: #050038;
@@ -16,19 +16,18 @@
 
 @cards_in_line: 4;
 
-
-@media @tablet {
-    @cards_in_line: 3;
-    @card_width: 30rem;
-}
-
 @main_horizontal_padding: 1vw;
 @card_horizontal_margin: 1vw;
+@card_horizontal_margin_tablet: 2vw;
 
-@card_width: ((100vw - @main_horizontal_padding * 2 - 2vw) / @cards_in_line - (2 * @card_horizontal_margin));
-@card_min_height: (30vw);
+@card_width: ((100vw - @main_horizontal_padding * 2 - 2vw) / 4 - (2 * @card_horizontal_margin));
+@card_width_tablet: ((100vw - @main_horizontal_padding * 2 - 4vw) / 3 - (2 * @card_horizontal_margin));
+@card_width_mobile: 60vw;
 
+@button_container_min_height: (@card_width * 1.2);
 
+@header_height: 25vh;
+@header_height_mobile: 20vh;
 
-@image_width: @card_width;
-@image_height: @image_width;
+@cards_max_height: 74vh;
+@cards_max_height_mobile: 78vh;

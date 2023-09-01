@@ -52,10 +52,17 @@
 
 		.image-container {
 			display: flex;
-			width: @image_width;
-			height: @image_height;
+			height: @card_width;
 
 			overflow: hidden;
+
+			@media @tablet {
+				height: @card_width_tablet;
+			}
+
+			@media @mobile {
+				height: @card_width_mobile;
+			}
 
 			:global(.image) {
 				align-items: center;
@@ -110,6 +117,8 @@
 			padding: 0;
 
 			overflow-x: scroll;
+
+			cursor: all-scroll;
 
 			&::-webkit-scrollbar {
 				display: none;
